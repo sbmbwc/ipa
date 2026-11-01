@@ -1,0 +1,11 @@
+{
+  "appId": "com.cui.metrooffline",
+  "appName": "沪上地铁",
+  "webDir": "www",
+  "backgroundColor": "#ffffff",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#ffffff",
+    "preferredContentMode": "mobile"
+  }
+}

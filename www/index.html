@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="description" content="上海地铁随身线路图，支持站点搜索、换乘查询与离线使用。">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="map-ui.css">
+<title>沪上地铁 · 随身线路图</title>
+</head>
+<body>
+<header class="topbar">
+ <a class="brand" href="./" aria-label="沪上地铁首页"><span class="brandmark">沪</span><span><strong>上海地铁</strong><small>SHANGHAI METRO</small></span></a>
+ <nav class="view-nav" aria-label="主要功能"><button id="map-tab" class="active" aria-pressed="true">线路图</button><button id="route-tab" aria-pressed="false">换乘查询</button></nav>
+ <div class="header-right"><span class="network-state" id="network-state">随身线路图</span><button id="help" class="iconbutton" aria-label="使用说明">?</button></div>
+</header>
+<main>
+ <aside class="panel" id="route-panel" hidden aria-label="换乘查询面板">
+  <div class="query-heading"><strong>换乘查询</strong><button id="close-route" class="iconbutton" aria-label="收起换乘查询">×</button></div>
+  <div class="panelhead"><span class="eyebrow">每一程，从这里出发</span><h1>下一站，去哪里？</h1><p>看线网，查换乘，轻松穿行上海。</p></div>
+  <form id="route-form" class="routeform">
+   <div class="station-input"><span class="dot start"></span><button type="button" id="from-btn" class="station-select"><small>出发站</small><span id="from-name">选择出发站</span></button></div>
+   <button type="button" id="swap" aria-label="交换起终点">⇅</button>
+   <div class="station-input"><span class="dot end"></span><button type="button" id="to-btn" class="station-select"><small>到达站</small><span id="to-name">选择到达站</span></button></div>
+   <button class="primary" type="submit">查询换乘 <span>↗</span></button>
+  </form>
+  <div class="route-options"><div class="segmented" aria-label="路线偏好"><button class="active" id="mode-transfers" aria-pressed="true">少换乘</button><button id="mode-stops" aria-pressed="false">少坐站</button></div><label class="special"><input type="checkbox" id="special">含磁浮 / 机场线</label></div>
+  <div id="results" aria-live="polite"></div>
+  <section class="empty-state" id="empty"><span class="mini-route">● ━━━ ◉ ━━━ ●</span><h2>把城市装进口袋</h2><p>在地图上点选车站，或搜索站名，<br>即可设置出发站与到达站。</p><button id="example" class="textbutton">试试：虹桥火车站 → 陆家嘴 <span>→</span></button></section>
+  <footer class="panel-footer"><span><i></i> 内置地图 · 无需联网</span><button id="about" class="textbutton">数据说明 ↗</button></footer>
+ </aside>
+ <section class="map-section" aria-label="上海地铁线路图">
+  <div class="map-top"><div class="map-title"><span class="eyebrow">SHANGHAI</span><h2>上海轨道交通<span id="line-count"></span></h2></div><button id="search-btn" class="search-button"><span>⌕</span> 搜索车站 <kbd>⌘ K</kbd></button></div>
+  <div id="map-viewport" tabindex="0" aria-label="可拖动缩放的线路图，点击车站设置起终点"><svg id="map" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="上海地铁线网示意图"><g id="map-content"></g></svg></div>
+  <div class="map-instruction">双指缩放 · 拖动查看 · 点选车站</div>
+  <div class="map-tools"><button id="zoom-in" aria-label="放大">＋</button><button id="zoom-out" aria-label="缩小">−</button><button id="home" aria-label="回到中心城区">⌂</button><button id="fit" aria-label="查看全图">⛶</button></div>
+  <div class="station-card" id="station-card" hidden></div>
+  <div class="linebar"><button id="all-lines" class="line-pill active">全部</button><div id="line-list"></div></div>
+  <button id="launch-route" class="launch-route"><span>⇄</span> 查询换乘</button>
+ </section>
+</main>
+<dialog id="picker"><div class="dialoghead"><h2 id="picker-title">搜索车站</h2><button class="iconbutton" id="close-picker" aria-label="关闭搜索">×</button></div><div class="searchfield"><span>⌕</span><input id="station-search" placeholder="输入站名或拼音，如 人民广场" autocomplete="off" autocapitalize="off"></div><p class="picker-hint" id="picker-hint">按线路筛选，也可以直接搜索站名</p><div id="picker-lines"></div><div id="search-results"></div></dialog>
+<dialog id="info"><div class="dialoghead"><h2 id="info-title"></h2><button class="iconbutton" id="close-info" aria-label="关闭说明">×</button></div><div id="info-body"></div></dialog>
+<div id="toast" role="status"></div>
+<script type="module" src="app.mjs"></script>
+</body></html>
